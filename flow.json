@@ -1,0 +1,430 @@
+[
+    {
+        "id": "56ed0e7b.e35a1",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "45912df1.872984",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "a564565d.4fb9e8",
+        "type": "subflow",
+        "name": "Subflow 1",
+        "info": "",
+        "in": [
+            {
+                "x": 50,
+                "y": 30,
+                "wires": [
+                    {
+                        "id": "c1a5b93f.f7ec78"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 700,
+                "y": 140,
+                "wires": [
+                    {
+                        "id": "c1a5b93f.f7ec78",
+                        "port": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "ee4dc4ae.590c48",
+        "type": "MySQLdatabase",
+        "z": "",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "sasi8362_partyz_1603",
+        "tz": ""
+    },
+    {
+        "id": "506264dc.0498cc",
+        "type": "pushover-keys",
+        "z": "",
+        "name": "Pushover - Partyz Token"
+    },
+    {
+        "id": "df2fe2ef.75c45",
+        "type": "http in",
+        "z": "45912df1.872984",
+        "name": "",
+        "url": "/wakeup",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 90,
+        "y": 40,
+        "wires": [
+            [
+                "80037bb2.aff918"
+            ]
+        ]
+    },
+    {
+        "id": "9b6a18b3.a97df8",
+        "type": "http response",
+        "z": "45912df1.872984",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 370,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "2195c9dc.6bff76",
+        "type": "http in",
+        "z": "45912df1.872984",
+        "name": "",
+        "url": "/qr/:qrcode",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 100,
+        "y": 200,
+        "wires": [
+            [
+                "869e468b.a1ecd8"
+            ]
+        ]
+    },
+    {
+        "id": "a7c765be.6eb8b8",
+        "type": "http response",
+        "z": "45912df1.872984",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 790,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "79474634.afeff8",
+        "type": "template",
+        "z": "45912df1.872984",
+        "name": "Page - Fund",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "Bravo !\nVous avez trouvé le QR Code: {{req.params.qrcode}}",
+        "output": "str",
+        "x": 630,
+        "y": 360,
+        "wires": [
+            [
+                "a7c765be.6eb8b8",
+                "fdf81209.cd737"
+            ]
+        ]
+    },
+    {
+        "id": "80037bb2.aff918",
+        "type": "template",
+        "z": "45912df1.872984",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "",
+        "output": "str",
+        "x": 240,
+        "y": 40,
+        "wires": [
+            [
+                "9b6a18b3.a97df8"
+            ]
+        ]
+    },
+    {
+        "id": "c1a5b93f.f7ec78",
+        "type": "mysql",
+        "z": "a564565d.4fb9e8",
+        "mydb": "ee4dc4ae.590c48",
+        "name": "",
+        "x": 420,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e9a4cdcb.edcc1",
+        "type": "pushover api",
+        "z": "45912df1.872984",
+        "keys": "506264dc.0498cc",
+        "title": "EasterEgg",
+        "name": "Pushover",
+        "x": 960,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "fdf81209.cd737",
+        "type": "template",
+        "z": "45912df1.872984",
+        "name": "Push Fund",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "Le QR {{req.params.qrcode}} a été trouvé !",
+        "output": "str",
+        "x": 810,
+        "y": 320,
+        "wires": [
+            [
+                "e9a4cdcb.edcc1"
+            ]
+        ]
+    },
+    {
+        "id": "124cc575.7d1d9b",
+        "type": "template",
+        "z": "45912df1.872984",
+        "name": "Already Fund",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "Le QR {{req.params.qrcode}} a déjà été trouvé !",
+        "output": "str",
+        "x": 330,
+        "y": 400,
+        "wires": [
+            [
+                "a7c765be.6eb8b8"
+            ]
+        ]
+    },
+    {
+        "id": "2563ecd6.72b2b4",
+        "type": "template",
+        "z": "45912df1.872984",
+        "name": "Update QR",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "UPDATE egg_qrcodes \nSET is_fund = 1,\ndate = now()\nWHERE code = {{req.params.qrcode}};",
+        "output": "str",
+        "x": 330,
+        "y": 360,
+        "wires": [
+            [
+                "30290fe.1cec5f"
+            ]
+        ]
+    },
+    {
+        "id": "30290fe.1cec5f",
+        "type": "subflow:a564565d.4fb9e8",
+        "z": "45912df1.872984",
+        "name": "",
+        "env": [],
+        "x": 480,
+        "y": 360,
+        "wires": [
+            [
+                "79474634.afeff8"
+            ]
+        ]
+    },
+    {
+        "id": "869e468b.a1ecd8",
+        "type": "template",
+        "z": "45912df1.872984",
+        "name": "Egg (code)",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "SELECT * FROM egg_qrcodes WHERE code = {{req.params.qrcode}}",
+        "output": "str",
+        "x": 270,
+        "y": 200,
+        "wires": [
+            [
+                "eae89789.30e708"
+            ]
+        ]
+    },
+    {
+        "id": "eae89789.30e708",
+        "type": "subflow:a564565d.4fb9e8",
+        "z": "45912df1.872984",
+        "name": "",
+        "env": [],
+        "x": 420,
+        "y": 200,
+        "wires": [
+            [
+                "3d652b1.a0712d4"
+            ]
+        ]
+    },
+    {
+        "id": "3d652b1.a0712d4",
+        "type": "switch",
+        "z": "45912df1.872984",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "empty"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 550,
+        "y": 200,
+        "wires": [
+            [
+                "ed3995cc.e36538"
+            ],
+            [
+                "283f9bb0.c1a814"
+            ]
+        ]
+    },
+    {
+        "id": "17ed0cac.8bba73",
+        "type": "template",
+        "z": "45912df1.872984",
+        "name": "Doesn't Exists",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "Le QR {{req.params.qrcode}} n'existe pas !",
+        "output": "str",
+        "x": 220,
+        "y": 280,
+        "wires": [
+            [
+                "ca9698cb.e37848"
+            ]
+        ]
+    },
+    {
+        "id": "4a441224.168d6c",
+        "type": "switch",
+        "z": "45912df1.872984",
+        "name": "",
+        "property": "payload.is_fund",
+        "propertyType": "jsonata",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "num"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 190,
+        "y": 380,
+        "wires": [
+            [
+                "2563ecd6.72b2b4"
+            ],
+            [
+                "124cc575.7d1d9b"
+            ]
+        ]
+    },
+    {
+        "id": "ca9698cb.e37848",
+        "type": "http response",
+        "z": "45912df1.872984",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 370,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "ed3995cc.e36538",
+        "type": "link out",
+        "z": "45912df1.872984",
+        "name": "",
+        "links": [
+            "6cc92ee7.f92fb"
+        ],
+        "x": 635,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "283f9bb0.c1a814",
+        "type": "link out",
+        "z": "45912df1.872984",
+        "name": "",
+        "links": [
+            "dc5d4f2b.11748"
+        ],
+        "x": 635,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "6cc92ee7.f92fb",
+        "type": "link in",
+        "z": "45912df1.872984",
+        "name": "",
+        "links": [
+            "ed3995cc.e36538"
+        ],
+        "x": 95,
+        "y": 280,
+        "wires": [
+            [
+                "17ed0cac.8bba73"
+            ]
+        ]
+    },
+    {
+        "id": "dc5d4f2b.11748",
+        "type": "link in",
+        "z": "45912df1.872984",
+        "name": "",
+        "links": [
+            "283f9bb0.c1a814"
+        ],
+        "x": 95,
+        "y": 380,
+        "wires": [
+            [
+                "4a441224.168d6c"
+            ]
+        ]
+    }
+]

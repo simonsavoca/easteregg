@@ -1,0 +1,20 @@
+{
+    "name": "EasterEgg",
+    "description": "Upload photos and message and show them on a live slideshow",
+    "version": "2.5.0",
+    "dependencies": {
+        "node-red-contrib-auth": "~0.1.7",
+        "node-red-node-mysql": "0.0.19",
+        "node-red-contrib-fs-ops": "~1.5.0",
+        "node-red-contrib-simple-message-queue": "~0.2.5",
+        "node-red-contrib-image-tools": "0.2.5",
+        "node-red-contrib-pushover": "0.2.0",
+        "node-red-contrib-socketio": "1.0.7"
+    },
+    "node-red": {
+        "settings": {
+            "flowFile": "flow.json",
+            "credentialsFile": "flow_cred.json"
+        }
+    }
+}
